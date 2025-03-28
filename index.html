@@ -59,22 +59,22 @@
       transition: background 0.2s ease;
     }
 
-    button:nth-child(4n) { background: #ffcccb; }
+    button:nth-child(4n) { background: #ffcccb; } 
     button:nth-child(4n):hover { background: #f5a9a9; }
 
     button:nth-child(-n+3),
     button:nth-child(n+5):nth-child(-n+7),
     button:nth-child(n+9):nth-child(-n+11),
-    button:nth-child(13) { background: #cce5ff; }
+    button:nth-child(13) { background: #cce5ff; } 
     button:nth-child(-n+3):hover,
     button:nth-child(n+5):nth-child(-n+7):hover,
     button:nth-child(n+9):nth-child(-n+11):hover,
     button:nth-child(13):hover { background: #99ccff; }
 
-    button:nth-child(14) { background: #ccffcc; }
+    button:nth-child(14) { background: #ccffcc; } 
     button:nth-child(14):hover { background: #99e699; }
 
-    button:nth-child(17) { background: #ffd966 !important; }
+    button:nth-child(17) { background: #ffd966 !important; } 
     button:nth-child(17):hover { background: #ffcc00 !important; }
 
     .hidden-screen {
@@ -186,9 +186,12 @@
   <button class="fullscreen-btn" onclick="activarPantallaCompleta()">Pantalla Completa</button>
   <button class="reiniciar-btn" onclick="reiniciarPrograma()">Reiniciar</button>
 
-  <iframe id="emulador" src="https://www.browserling.com/browse/win10/chrome127/https://bloxd.io/" title="Chrome Emulador"></iframe>
+  <iframe id="emulador" src="https://win11.blueedge.me/" title="Chrome Emulador"></iframe>
 
   <div class="instruction-box">
+    <span>Para tener el programa, entra a <strong>Browser</strong> y estira la barra para obtener una pantalla completa.</span>
+    <img src="img/browser-icon.png" alt="Logo Browser">
+  </div>
 
   <div style="margin-top: 10px; font-size: 0.95em; color: #333; text-align: center;">
     Si quieres una nueva pestaña, presiona el botón de <strong>Reiniciar</strong> arriba a la derecha.
@@ -215,7 +218,7 @@
     if (display.value === '14+698') {
       document.getElementById('calc').style.display = 'none';
       document.getElementById('browser').style.display = 'flex';
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // Centrado al mostrar
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       try {
         display.value = eval(display.value);
