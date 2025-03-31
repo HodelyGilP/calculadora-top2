@@ -2,17 +2,19 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Calculadora</title>
+  <title>Calculadora Estilo Spotify</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1db954, #191414);
+      color: #fff;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      margin: 0;
-      background: #f0f0f0;
     }
 
     .creator-global {
@@ -21,61 +23,88 @@
       right: 20px;
       font-size: 1.2em;
       font-weight: bold;
-      color: #444;
+      color: #1ed760;
       z-index: 999;
     }
 
-    .calculator, .hidden-screen {
+    .calculator, .hidden-screen, .auth-screen {
       width: 400px;
-      background: white;
+      background: #121212;
       padding: 20px;
       border-radius: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+      margin-bottom: 20px;
     }
 
     .screen {
       width: 100%;
-      height: 40px;
-      margin-bottom: 10px;
+      height: 50px;
+      margin-bottom: 15px;
       text-align: right;
-      font-size: 1.5em;
-      padding: 5px 10px;
-      border: 1px solid #ccc;
+      font-size: 1.8em;
+      padding: 10px;
+      border: none;
       border-radius: 10px;
+      background-color: #282828;
+      color: #fff;
     }
 
     .buttons {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      gap: 12px;
     }
 
     button {
       padding: 20px;
-      font-size: 1.2em;
+      font-size: 1.3em;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
-      transition: background 0.2s ease;
+      transition: all 0.2s ease;
+      background-color: #1db954;
+      color: white;
     }
 
-    button:nth-child(4n) { background: #ffcccb; }
-    button:nth-child(4n):hover { background: #f5a9a9; }
+    button:hover {
+      background-color: #1ed760;
+    }
 
-    button:nth-child(-n+3),
-    button:nth-child(n+5):nth-child(-n+7),
-    button:nth-child(n+9):nth-child(-n+11),
-    button:nth-child(13) { background: #cce5ff; }
-    button:nth-child(-n+3):hover,
-    button:nth-child(n+5):nth-child(-n+7):hover,
-    button:nth-child(n+9):nth-child(-n+11):hover,
-    button:nth-child(13):hover { background: #99ccff; }
+    .btn-op { background-color: #535353; }
+    .btn-op:hover { background-color: #6a6a6a; }
 
-    button:nth-child(14) { background: #ccffcc; }
-    button:nth-child(14):hover { background: #99e699; }
+    .btn-clear { background-color: #ff4d4d; }
+    .btn-clear:hover { background-color: #ff1a1a; }
 
-    button:nth-child(17) { background: #ffd966 !important; }
-    button:nth-child(17):hover { background: #ffcc00 !important; }
+    .equal-btn {
+      grid-column: span 4;
+      background-color: #1ed760;
+    }
+
+    .equal-btn:hover {
+      background-color: #25f26d;
+    }
+
+    .auth-screen {
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      color: white;
+    }
+
+    select, input[type="password"] {
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 8px;
+      border: none;
+      background-color: #282828;
+      color: white;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+    }
 
     .hidden-screen {
       display: none;
@@ -83,11 +112,10 @@
       height: 90vh;
       width: 75vw;
       max-width: 1300px;
-      position: relative;
-      background: white;
+      background: #121212;
       border-radius: 20px;
       padding: 20px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
       justify-content: center;
     }
 
@@ -100,55 +128,15 @@
       margin-top: 10px;
     }
 
-    .instruction-box {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      justify-content: center;
-      font-size: 1.1em;
-      font-weight: bold;
-      color: #333;
-    }
-
-    .instruction-box img {
-      height: 40px;
-    }
-
-    .reiniciar-btn, .fullscreen-btn {
-      position: absolute;
-      top: 10px;
-      padding: 8px 14px;
-      font-size: 14px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    .reiniciar-btn {
-      right: 10px;
-      background-color: #ff9999;
-      color: white;
-    }
-
-    .fullscreen-btn {
-      right: 120px;
-      background-color: #4CAF50;
-      color: white;
-    }
-
     .alerta-final {
       margin-top: 20px;
       font-size: 1.2em;
-      color: #c62828;
+      color: #f87171;
       font-weight: bold;
       text-align: center;
-      background-color: #ffebee;
+      background-color: #1f2937;
       padding: 12px 20px;
       border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
   </style>
 </head>
@@ -161,39 +149,44 @@
     <button onclick="append('7')">7</button>
     <button onclick="append('8')">8</button>
     <button onclick="append('9')">9</button>
-    <button onclick="append('+')">+</button>
+    <button class="btn-op" onclick="append('+')">+</button>
 
     <button onclick="append('4')">4</button>
     <button onclick="append('5')">5</button>
     <button onclick="append('6')">6</button>
-    <button onclick="append('-')">-</button>
+    <button class="btn-op" onclick="append('-')">-</button>
 
     <button onclick="append('1')">1</button>
     <button onclick="append('2')">2</button>
     <button onclick="append('3')">3</button>
-    <button onclick="append('*')">*</button>
+    <button class="btn-op" onclick="append('*')">*</button>
 
     <button onclick="append('0')">0</button>
     <button onclick="append('.')">.</button>
-    <button onclick="calculate()">=</button>
-    <button onclick="append('/')">/</button>
+    <button class="btn-op" onclick="append('/')">/</button>
+    <button class="btn-clear" onclick="backspace()">⌫</button>
 
-    <button onclick="clearDisplay()" style="grid-column: span 4;">C</button>
+    <button class="equal-btn" onclick="calculate()">=</button>
   </div>
 </div>
 
+<div class="auth-screen" id="auth">
+  <label for="user-select">Selecciona tu perfil:</label>
+  <select id="user-select">
+    <option value="">-- Selecciona un usuario --</option>
+    <option value="hodei">Hodei Gil Seslija</option>
+  </select>
+
+  <label for="password-input">Contraseña:</label>
+  <input type="password" id="password-input" placeholder="Introduce tu contraseña">
+
+  <label><input type="checkbox" id="terms"> Acepto no compartir mi cuenta ni revelar la existencia de esta app</label>
+
+  <button onclick="validarCredenciales()">Entrar</button>
+</div>
+
 <div class="hidden-screen" id="browser">
-  <button class="fullscreen-btn" onclick="activarPantallaCompleta()">Pantalla Completa</button>
-  <button class="reiniciar-btn" onclick="reiniciarPrograma()">Reiniciar</button>
-
   <iframe id="emulador" src="https://copy.sh/v86/"></iframe>
-
-  <div class="instruction-box">
-
-  <div style="margin-top: 10px; font-size: 0.95em; color: #333; text-align: center;">
-    Si quieres una nueva pestaña, presiona el botón de <strong>Reiniciar</strong> arriba a la derecha.
-  </div>
-
   <div class="alerta-final">
     ⚠️ Algunas webs no funcionan aún.<br>
     Estoy trabajando en ello. Si la navegación va un poco rara, también estoy en eso 😅
@@ -201,21 +194,24 @@
 </div>
 
 <script>
+  const credenciales = {
+    hodei: "Coa83"
+  };
+
   let display = document.getElementById('display');
 
   function append(value) {
     display.value += value;
   }
 
-  function clearDisplay() {
-    display.value = '';
+  function backspace() {
+    display.value = display.value.slice(0, -1);
   }
 
   function calculate() {
     if (display.value === '14+698') {
       document.getElementById('calc').style.display = 'none';
-      document.getElementById('browser').style.display = 'flex';
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // Centrado al mostrar
+      document.getElementById('auth').style.display = 'flex';
     } else {
       try {
         display.value = eval(display.value);
@@ -225,29 +221,23 @@
     }
   }
 
-  function reiniciarPrograma() {
-    const iframe = document.getElementById("emulador");
-    iframe.src = iframe.src;
-  }
+  function validarCredenciales() {
+    const usuario = document.getElementById('user-select').value;
+    const pass = document.getElementById('password-input').value;
+    const acepta = document.getElementById('terms').checked;
 
-  function activarPantallaCompleta() {
-    const iframe = document.getElementById("emulador");
-    if (iframe.requestFullscreen) {
-      iframe.requestFullscreen();
-    } else if (iframe.webkitRequestFullscreen) {
-      iframe.webkitRequestFullscreen();
-    } else if (iframe.msRequestFullscreen) {
-      iframe.msRequestFullscreen();
+    if (!usuario || !pass || !acepta) {
+      alert('Debes seleccionar un usuario, introducir contraseña y aceptar los términos.');
+      return;
+    }
+
+    if (credenciales[usuario] === pass) {
+      document.getElementById('auth').style.display = 'none';
+      document.getElementById('browser').style.display = 'flex';
+    } else {
+      alert('Contraseña incorrecta.');
     }
   }
-
-  document.addEventListener('keydown', function(event) {
-    const browserVisible = document.getElementById('browser').style.display === 'flex';
-    if (browserVisible && event.key === '-') {
-      document.getElementById('browser').style.display = 'none';
-      document.getElementById('calc').style.display = 'block';
-    }
-  });
 </script>
 </body>
 </html>
